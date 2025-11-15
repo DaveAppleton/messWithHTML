@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bugger Me!</title>
+    <script language="javascript">
+
+        function go() {
+            const pg = document.getElementById("playground")
+
+            let tbl = document.createElement("table")
+            tbl.setAttribute("border", "solid")
+            let r1 = document.createElement("row")
+            let c1 = document.createElement("cell")
+            c1.innerText = "Hello Ali"
+            r1.appendChild(c1)
+            let c2 = document.createElement("cell")
+            c2.innerText = "What ???"
+            c2.style.backgroundColor = "green";
+            r1.appendChild(c2)
+            tbl.appendChild(r1)
+            pg.appendChild(tbl)
+        }
+
+        function draw() {
+            drawIt(0,0)
+
+        }
+
+        let x = 0
+        let y = 0
+        let oldX = 0
+        let oldY = 0
+
+        function drawIt(x,y){
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 50;
+            ctx.arc(centerX+oldX, centerY+oldY, radius, 0, 2 * Math.PI, false);
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = 'white';
+            ctx.stroke();
+
+            oldX = x;
+            oldY = y
+
+            ctx.arc(centerX+x, centerY+y, radius, 0, 2 * Math.PI, false);
+            // To stroke the circle:
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'blue';
+            ctx.stroke();
+
+            //To fill the circle:
+            ctx.fillStyle = 'red';
+            ctx.fill();
+        }
+
+        function init() {
+            draw()
+            document.addEventListener('keydown', function (event) {
+                // console.log('Key pressed down:', event.key);
+                // event.code provides a more consistent physical key identifier
+                // event.keyCode (deprecated) or event.which (deprecated) for older browsers
+                // if (event.key === 'Enter') {
+                //     console.log('Enter key was pressed!');
+                // }
+                switch (event.key) {
+                    
+                    case "w" : 
+                        y--;
+                        break;
+                    case "s" :
+                        y++;
+                        break;
+                    case "a" : 
+                        x--;
+                        break;
+                    case "d": 
+                        x++;
+                        break;
+                    default: 
+                        return;
+                }
+                drawIt(x,y)
+                
+            });
+        }
+
+    </script>
+</head>
+
+<body onload="init()">
+    <!--! tab to get outline !!! -->
+    <h1>My Page</h1>
+    <div id="playground">
+
+    </div>
+    <!-- <button onclick="javascript:go();">PRESS ME</button> -->
+    <!-- <button onclick="javascript:draw();">NOT ME</button> -->
+    <canvas id="myCanvas" width="200" height="200" style="border:1px solid #000000;"></canvas>
+</body>
+
+</html>
